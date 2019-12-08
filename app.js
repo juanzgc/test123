@@ -27,7 +27,7 @@ var monk = require('monk');
 //   }
 // });
 var Db = require('tingodb')().Db;
-var db = new Db('/var/lib/mongodb', {});
+var db = new Db('/var/lib/mongodb/quest6', {});
 var collection = db.collection("lap");
 
 collection.findOne({"lap": 1}, function(err, result) {
