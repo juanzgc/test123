@@ -18,26 +18,26 @@ var espPort = 8080;
 var udpSocket = dgram.createSocket('udp4');
 
 var monk = require('monk');
-var db = monk('127.0.0.1/quest6', function (err, db) {
-  if (err) {
-    console.log("Error", err);
-  }
-  else {
-    console.log("Got db", db);
-  }
-});
-// var Db = require('tingodb')().Db;
-// var db = new Db('/var/lib/mongodb', {});
-// var collection = db.collection("lap");
-
-// collection.findOne({"lap": 1}, function(err, result) {
+// var db = monk('127.0.0.1/quest6', function (err, db) {
 //   if (err) {
-//     console.log("error ", err);
+//     console.log("Error", err);
 //   }
 //   else {
-//     console.log("result", result);
+//     console.log("Got db", db);
 //   }
-// })
+// });
+var Db = require('tingodb')().Db;
+var db = new Db('/var/lib/mongodb', {});
+var collection = db.collection("lap");
+
+collection.findOne({"lap": 1}, function(err, result) {
+  if (err) {
+    console.log("error ", err);
+  }
+  else {
+    console.log("result", result);
+  }
+})
 
 
 // To run be on -> http://192.168.1.133:8080/
