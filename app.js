@@ -10,7 +10,9 @@ var app = express();
 
 // UDP Socket
 var udpSocketPort = 8080;
-var udpSocketHost = "192.168.1.133";
+// var udpSocketHost = "192.168.1.133";
+var udpSocketHost = "192.168.1.144";
+
 var espIP = "192.168.1.141";
 var espPort = 8080;
 var udpSocket = dgram.createSocket('udp4');
@@ -21,7 +23,7 @@ var Db = require('tingodb')().Db;
 var db = new Db('/var/lib/mongodb', {});
 var collection = db.collection("lap");
 
-collection.find({"lap": 1}, function(err, result) {
+collection.findOne({"lap": 1}, function(err, result) {
   if (err) {
     console.log("error ", err);
   }
