@@ -1,0 +1,168 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <script>
+    $(function () {
+      var socket = io();
+
+      var db = [];
+
+      $(document).keydown(function (e) {
+        console.log("key down e", e);
+
+        switch (e.keyCode) {
+          case 37:
+            // Left
+            socket.emit('left', { value: 'left' });
+
+            break;
+          case 38:
+            // Up
+            socket.emit('up', { value: 'up' });
+
+            break;
+          case 39:
+            // Right
+            socket.emit('right', { value: 'right' });
+
+            break;
+          case 40:
+            // Down
+            socket.emit('down', { value: 'down' });
+
+            break;
+          default:
+            break;
+        }
+
+      })
+
+      $("#container-fluid").keydown(function () {
+        alert("Key down")
+      })
+
+      socket.on('connect', function () {
+        // drawTable();
+
+        socket.on('db', function (data) {
+          db = data;
+          drawTable();
+        });
+
+        // drawTable();
+
+        console.log("socket connected");
+      });
+
+      function drawTable() {
+        let tbody = $("#tbody");
+        tbody.empty();
+        // Person
+        for (var i = 0; i < db.length; i++) {
+          console.log(db[i]);
+          let tr = tbody.prepend("<tr> </tr>");
+          tr.prepend("<td>" + db[i].auth + "</td>")
+          tr.prepend("<td>" + db[i].location + "</td>")
+          tr.prepend("<td>" + new Date(db[i].time).toLocaleTimeString() + "</td>")
+          tr.prepend("<td>" + db[i].hub_ID + "</td>")
+          tr.prepend("<td>" + db[i].fob_ID + "</td>")
+          tr.prepend("<td>" + db[i].name + "</td>")
+          tr.prepend("<th scope='row'>" + (i + 1) + "</th>")
+
+
+        }
+
+      }
+
+    });
+  </script>
+
+</head>
+
+<body>
+  <h1 style="margin-top: 20px; text-align: center;">Secure Key - Quest 5</h1>
+  <div class="container-fluid">
+    <h4 style="margin-top: 25px">Juan Zapata Gomez, David Abadi, Joseph Paller</h3>
+      <h5>Group 5
+    </h4>
+
+
+    <!-- <div class="d-flex justify-content-around" style="margin-top: 40px;">
+      <button type="button" id="go" class="btn btn-outline-primary">GO</button>
+      <button type="button" id="stop" class="btn btn-outline-primary">STOP</button>
+
+      <div class="form-inline">
+        <div class="form-group mx-sm-3 mb-2">
+          <label for="timer" class="sr-only">Set Timer</label>
+          <input type="number" class="form-control" id="timer" placeholder="Timer">
+        </div>
+        <button type="button" id="timerButton" class="btn btn-primary mb-2">SEND</button>
+      </div>
+    </div> -->
+
+    <div class="text-center" style="margin-top: 20px;">
+      <img src="http://192.168.1.144:8081" width="640" height="480" />
+    </div>
+
+    <div class="text-center">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Person</th>
+            <th scope="col">Fob ID</th>
+            <th scope="col">Hub ID</th>
+            <th scope="col">Time</th>
+            <th scope="col">Location</th>
+            <th scope="col">Auth</th>
+
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <!-- <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td>Larry</td>
+            <td>the Bird</td>
+            <td>@twitter</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr> -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- <h5 style="margin-top: 40px;">Battery Percentage</h5>
+    <div class="progress">
+      <div id="battery-progress" class="progress-bar" role="progressbar" style="width: 1%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">0%</div>
+    </div>
+
+    <div id="chartContainer2" style="height: 300px; width: 100%; margin-top: 40px"></div>
+    <div id="chartContainer3" style="height: 300px; width: 100%; margin-top: 40px"></div> -->
+
+  </div>
+</body>
+
+</html>
