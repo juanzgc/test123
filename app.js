@@ -18,7 +18,7 @@ var espPort = 8080;
 var udpSocket = dgram.createSocket('udp4');
 
 var monk = require('monk');
-var db = monk('127.0.0.1/quest5', function (err, db) {
+var db = monk('127.0.0.1/quest6', function (err, db) {
   if (err) {
     console.log("Error", err);
   }
