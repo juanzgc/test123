@@ -96,6 +96,9 @@ app.use(function (err, req, res, next) {
 
 const server = http.createServer(app)
 
+// CommonJS require
+const jsQR = require("jsqr");
+
 var io = require('socket.io')(server);
 
 function isJsonString(str) {
