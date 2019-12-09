@@ -5,6 +5,7 @@
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+  <script src="jsQR.js"></script>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -44,9 +45,7 @@
 
       })
 
-      $("#container-fluid").keydown(function () {
-        alert("Key down")
-      })
+
 
       socket.on('connect', function () {
         // drawTable();
@@ -81,6 +80,26 @@
 
       }
 
+
+
+      function drawImage() {
+        console.log("drawing image");
+        
+        var imgSource = $("#img-source");
+        console.log("Image source", imgSource);
+
+        const img = CanvasRenderingContext2D.drawImage(imgSource, 0, 0, 640, 480);
+        console.log("canvas img", img);
+
+        const code = jsQR(img, 640, 480);
+ 
+        if (code) {
+          console.log("Found QR code", code);
+        }
+      }
+
+      setInterval(drawImage, 1000);
+
     });
   </script>
 
@@ -108,7 +127,7 @@
     </div> -->
 
     <div class="text-center" style="margin-top: 20px;">
-      <img src="http://192.168.1.144:8081" width="640" height="480" />
+      <img id="img-source" crossorigin="anonymous" src="http://192.168.1.144:8081" width="640" height="480" />
     </div>
 
     <div class="text-center">
