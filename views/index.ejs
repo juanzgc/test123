@@ -82,23 +82,23 @@
 
 
 
-      function drawImage() {
-        console.log("drawing image");
+      // function drawImage() {
+      //   console.log("drawing image");
         
-        var imgSource = $("#img-source");
-        console.log("Image source", imgSource);
+      //   var imgSource = $("#img-source");
+      //   console.log("Image source", imgSource);
 
-        const img = CanvasRenderingContext2D.drawImage(imgSource, 0, 0, 640, 480);
-        console.log("canvas img", img);
+      //   const img = CanvasRenderingContext2D.drawImage(imgSource, 0, 0, 640, 480);
+      //   console.log("canvas img", img);
 
-        const code = jsQR(img, 640, 480);
+      //   const code = jsQR(img, 640, 480);
  
-        if (code) {
-          console.log("Found QR code", code);
-        }
-      }
+      //   if (code) {
+      //     console.log("Found QR code", code);
+      //   }
+      // }
 
-      setInterval(drawImage, 1000);
+      // setInterval(drawImage, 1000);
 
     });
   </script>
