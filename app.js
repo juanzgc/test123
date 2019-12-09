@@ -39,34 +39,34 @@ var udpSocket = dgram.createSocket('udp4');
 //   }
 // })
 
-// var level = require('level')
+var level = require('level')
 
-// // 1) Create our database, supply location and options.
-// //    This will create or open the underlying store.
-// var db = level('my-db')
+// 1) Create our database, supply location and options.
+//    This will create or open the underlying store.
+var db = level('my-db')
 
-// // 2) Put a key & value
-// db.put('name', 'Level', function (err) {
-//   if (err) return console.log('Ooops!', err) // some kind of I/O error
+// 2) Put a key & value
+db.put('name', 'Level', function (err) {
+  if (err) return console.log('Ooops!', err) // some kind of I/O error
 
-//   // 3) Fetch by key
-//   db.get('name', function (err, value) {
-//     if (err) return console.log('Ooops!', err) // likely the key was not found
+  // 3) Fetch by key
+  db.get('name', function (err, value) {
+    if (err) return console.log('Ooops!', err) // likely the key was not found
 
-//     // Ta da!
-//     console.log('name=' + value)
-//   })
-// })
-
-var LevelDB = require('node-leveldb');
-LevelDB.open('laps');
-
-LevelDB.set('lap1', 1);
-LevelDB.set('lap2', 2);
-
-LevelDB.list(function(key, val) {
-  console.log(key + ': ' + val);
+    // Ta da!
+    console.log('name=' + value)
+  })
 })
+
+// var LevelDB = require('node-leveldb');
+// LevelDB.open('laps');
+
+// LevelDB.set('lap1', 1);
+// LevelDB.set('lap2', 2);
+
+// LevelDB.list(function(key, val) {
+//   console.log(key + ': ' + val);
+// })
 
 
 
