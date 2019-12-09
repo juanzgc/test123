@@ -26,37 +26,37 @@ var udpSocket = dgram.createSocket('udp4');
 //     console.log("Got db", db);
 //   }
 // });
-// var Db = require('tingodb')().Db;
-// var db = new Db('/var/lib/mongodb', {});
-// var collection = db.collection("lap");
+var Db = require('tingodb')().Db;
+var db = new Db('/var/lib/mongodb', {});
+var collection = db.collection("lap");
 
-// collection.findOne({"lap": 1}, function(err, result) {
-//   if (err) {
-//     console.log("error ", err);
-//   }
-//   else {
-//     console.log("result", result);
-//   }
-// })
-
-var level = require('level')
-
-// 1) Create our database, supply location and options.
-//    This will create or open the underlying store.
-var db = level('my-db')
-
-// 2) Put a key & value
-db.put('name', 'Level', function (err) {
-  if (err) return console.log('Ooops!', err) // some kind of I/O error
-
-  // 3) Fetch by key
-  db.get('name', function (err, value) {
-    if (err) return console.log('Ooops!', err) // likely the key was not found
-
-    // Ta da!
-    console.log('name=' + value)
-  })
+collection.findOne({"lap": 1}, function(err, result) {
+  if (err) {
+    console.log("error ", err);
+  }
+  else {
+    console.log("result", result);
+  }
 })
+
+// var level = require('level')
+
+// // 1) Create our database, supply location and options.
+// //    This will create or open the underlying store.
+// var db = level('my-db')
+
+// // 2) Put a key & value
+// db.put('name', 'Level', function (err) {
+//   if (err) return console.log('Ooops!', err) // some kind of I/O error
+
+//   // 3) Fetch by key
+//   db.get('name', function (err, value) {
+//     if (err) return console.log('Ooops!', err) // likely the key was not found
+
+//     // Ta da!
+//     console.log('name=' + value)
+//   })
+// })
 
 
 
