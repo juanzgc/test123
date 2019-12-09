@@ -31,7 +31,7 @@ var level = require('level')
 var db = level('laps')
 
 // 2) Put a key & value
-db.put('name', 'Level2', function (err) {
+db.put('name', 'Level3', function (err) {
   if (err) return console.log('Ooops!', err) // some kind of I/O error
 
   // 3) Fetch by key
