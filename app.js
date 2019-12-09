@@ -17,15 +17,15 @@ var espIP = "192.168.1.141";
 var espPort = 8080;
 var udpSocket = dgram.createSocket('udp4');
 
-var monk = require('monk');
-var db = monk('127.0.0.1/quest6', function (err, db) {
-  if (err) {
-    console.log("Error", err);
-  }
-  else {
-    console.log("Got db", db);
-  }
-});
+// var monk = require('monk');
+// var db = monk('127.0.0.1/quest6', function (err, db) {
+//   if (err) {
+//     console.log("Error", err);
+//   }
+//   else {
+//     console.log("Got db", db);
+//   }
+// });
 // var Db = require('tingodb')().Db;
 // var db = new Db('/var/lib/mongodb', {});
 // var collection = db.collection("lap");
@@ -38,6 +38,26 @@ var db = monk('127.0.0.1/quest6', function (err, db) {
 //     console.log("result", result);
 //   }
 // })
+
+var level = require('level')
+
+// 1) Create our database, supply location and options.
+//    This will create or open the underlying store.
+var db = level('my-db')
+
+// 2) Put a key & value
+db.put('name', 'Level', function (err) {
+  if (err) return console.log('Ooops!', err) // some kind of I/O error
+
+  // 3) Fetch by key
+  db.get('name', function (err, value) {
+    if (err) return console.log('Ooops!', err) // likely the key was not found
+
+    // Ta da!
+    console.log('name=' + value)
+  })
+})
+
 
 
 // To run be on -> http://192.168.1.133:8080/
