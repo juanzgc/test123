@@ -32,19 +32,19 @@ var db = level('laps')
 
 // 2) Put a key & value
 var obj = {
-  "time": 1,
-  "beacon": "b1"
+  "time": 2,
+  "beacon": "b2"
 }
-db.put('name', JSON.stringify(obj), function (err) {
+db.put('name2', JSON.stringify(obj), function (err) {
   if (err) return console.log('Ooops!', err) // some kind of I/O error
 
-  // 3) Fetch by key
-  db.get('name', function (err, value) {
-    if (err) return console.log('Ooops!', err) // likely the key was not found
+  // // 3) Fetch by key
+  // db.get('name', function (err, value) {
+  //   if (err) return console.log('Ooops!', err) // likely the key was not found
 
-    // Ta da!
-    console.log('name=' + value)
-  })
+  //   // Ta da!
+  //   console.log('name=' + value)
+  // })
 })
 
 db.createReadStream()
