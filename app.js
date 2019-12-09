@@ -136,121 +136,121 @@ io.on('connection', function (socket) {
   })
   */
 
-  udpSocket.on('message', function (message, remote) {
-    console.log(remote.address + ':' + remote.port + ' - ' + message);
-    console.log("received a message");
+  // udpSocket.on('message', function (message, remote) {
+  //   console.log(remote.address + ':' + remote.port + ' - ' + message);
+  //   console.log("received a message");
 
-    function notAllowed(fobItem, parsedData, hubItem) {
-      console.log("hub item", hubItem);
-      let data = parsedData;
-      data['auth'] = false;
-      data['time'] = new Date();
-      data['name'] = fobItem.name;
-      data['location'] = hubItem.location;
-      udpSocket.send('r', espPort, fobItem.ip, function(error) {
-        if (error) {
-          console.log("Error sending to esp32: ");
-        }
-        else {
-          console.log("Message to esp32 sent okay: 'r' \n");
-        }
-      })
+  //   function notAllowed(fobItem, parsedData, hubItem) {
+  //     console.log("hub item", hubItem);
+  //     let data = parsedData;
+  //     data['auth'] = false;
+  //     data['time'] = new Date();
+  //     data['name'] = fobItem.name;
+  //     data['location'] = hubItem.location;
+  //     udpSocket.send('r', espPort, fobItem.ip, function(error) {
+  //       if (error) {
+  //         console.log("Error sending to esp32: ");
+  //       }
+  //       else {
+  //         console.log("Message to esp32 sent okay: 'r' \n");
+  //       }
+  //     })
 
-      let entries = db.get('entries');
-      entries.insert(data).then(function (res) {
-        // console.log("posting new entry", res);
-        entries.find().then(function (allItems) {
-          // console.log("all new entries", allItems);
-          socket.emit('db', allItems);
-        })
-      }).catch(function (err) {
-        console.log("error posting", err)
-      })
-    }
+  //     let entries = db.get('entries');
+  //     entries.insert(data).then(function (res) {
+  //       // console.log("posting new entry", res);
+  //       entries.find().then(function (allItems) {
+  //         // console.log("all new entries", allItems);
+  //         socket.emit('db', allItems);
+  //       })
+  //     }).catch(function (err) {
+  //       console.log("error posting", err)
+  //     })
+  //   }
 
 
-    function postData(data) {
-      let parsedData = {
-        "fob_ID": data.fob_ID,
-        "hub_ID": data.hub_ID,
-        "code": data.code
-      }
+  //   function postData(data) {
+  //     let parsedData = {
+  //       "fob_ID": data.fob_ID,
+  //       "hub_ID": data.hub_ID,
+  //       "code": data.code
+  //     }
 
-      let entries = db.get('entries');
-      let fobCol = db.get('fob');
-      let hubCol = db.get('hub')
+  //     let entries = db.get('entries');
+  //     let fobCol = db.get('fob');
+  //     let hubCol = db.get('hub')
 
       
-      hubCol.find({"ID": parsedData.hub_ID}).then(hubItem => {
-        let allowed = hubItem[0].allowed;
-        if (allowed.includes(parsedData.fob_ID)) {
-          // The fob id is allowed by the hub
-          // console.log("Fob id is allowed", parsedData.fob_ID);
-          // now check if the code key matches
-          fobCol.find({"ID": parsedData.fob_ID}).then(fobItem => {
-            if (fobItem[0].code.toString() === parsedData.code) {
+  //     hubCol.find({"ID": parsedData.hub_ID}).then(hubItem => {
+  //       let allowed = hubItem[0].allowed;
+  //       if (allowed.includes(parsedData.fob_ID)) {
+  //         // The fob id is allowed by the hub
+  //         // console.log("Fob id is allowed", parsedData.fob_ID);
+  //         // now check if the code key matches
+  //         fobCol.find({"ID": parsedData.fob_ID}).then(fobItem => {
+  //           if (fobItem[0].code.toString() === parsedData.code) {
 
-              // console.log("Fob id matches code", parsedData.fob_ID);
+  //             // console.log("Fob id matches code", parsedData.fob_ID);
 
-              // code matches succes
+  //             // code matches succes
               
-              udpSocket.send('g', espPort, fobItem[0].ip, function(error) {
-                if (error) {
-                  console.log("Error sending to esp32: " );
-                }
-                else {
-                  console.log("Message to esp32 sent okay: 'g'\n");
-                }
-              })
+  //             udpSocket.send('g', espPort, fobItem[0].ip, function(error) {
+  //               if (error) {
+  //                 console.log("Error sending to esp32: " );
+  //               }
+  //               else {
+  //                 console.log("Message to esp32 sent okay: 'g'\n");
+  //               }
+  //             })
 
-              let data = parsedData;
-              data['auth'] = true;
-              data['name'] = fobItem[0].name;
-              data['location'] = hubItem[0].location;
-              data['time'] = new Date();
+  //             let data = parsedData;
+  //             data['auth'] = true;
+  //             data['name'] = fobItem[0].name;
+  //             data['location'] = hubItem[0].location;
+  //             data['time'] = new Date();
 
-              // console.log("posting data");
-              entries.insert(data).then(function (res) {
-                // console.log("posting new entry", res);
-                entries.find().then(function (allItems) {
-                  // console.log("all new entries", allItems);
-                  socket.emit('db', allItems);
-                })
-              }).catch(function (err) {
-                console.log("error posting", err)
-              })
-
-
-            }
-            else {
-              notAllowed(fobItem[0], parsedData, hubItem[0]);
-            }
-          })
-        }
-        else {
-          fobCol.find({"ID": parsedData.fob_ID}).then(fobItem => {
-            notAllowed(fobItem[0], parsedData, hubItem[0]);
-          })
-        }
-      })
-    }
+  //             // console.log("posting data");
+  //             entries.insert(data).then(function (res) {
+  //               // console.log("posting new entry", res);
+  //               entries.find().then(function (allItems) {
+  //                 // console.log("all new entries", allItems);
+  //                 socket.emit('db', allItems);
+  //               })
+  //             }).catch(function (err) {
+  //               console.log("error posting", err)
+  //             })
 
 
-    if (isJsonString(message)) {
-      var parsedData = JSON.parse(message);
-      // console.log("parsed data JSON", parsedData);
-      // console.log("posting data");
-      postData(parsedData)
-    }
-    else {
-      console.log("Parsing errors with: ", message);
-    }
+  //           }
+  //           else {
+  //             notAllowed(fobItem[0], parsedData, hubItem[0]);
+  //           }
+  //         })
+  //       }
+  //       else {
+  //         fobCol.find({"ID": parsedData.fob_ID}).then(fobItem => {
+  //           notAllowed(fobItem[0], parsedData, hubItem[0]);
+  //         })
+  //       }
+  //     })
+  //   }
 
 
-  });
+  //   if (isJsonString(message)) {
+  //     var parsedData = JSON.parse(message);
+  //     // console.log("parsed data JSON", parsedData);
+  //     // console.log("posting data");
+  //     postData(parsedData)
+  //   }
+  //   else {
+  //     console.log("Parsing errors with: ", message);
+  //   }
+
+
+  // });
+  console.log('socket connected');
 
 });
-console.log('socket connected');
 
 const port = process.env.PORT || 8080;
 
