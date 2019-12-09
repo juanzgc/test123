@@ -256,7 +256,7 @@ io.on('connection', function (socket) {
 
 });
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 
 server.listen(port)
 server.on("listening", () => {
