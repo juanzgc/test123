@@ -5,6 +5,7 @@ var fs = require('fs');
 var path = require('path')
 
 router.get('/', function(req, res, next) {
+  console.log("home page")
   res.render('index')
 })
 
