@@ -26,27 +26,12 @@ var udpSocket = dgram.createSocket('udp4');
 //     console.log("Got db", db);
 //   }
 // });
-// var Db = require('tingodb')().Db;
-// var db = new Db('/var/lib/mongodb', {});
-// var collection = db.collection("lap");
-
-// collection.findOne({"lap": 1}, function(err, result) {
-//   if (err) {
-//     console.log("error ", err);
-//   }
-//   else {
-//     console.log("result", result);
-//   }
-// })
 
 var level = require('level')
-
-// 1) Create our database, supply location and options.
-//    This will create or open the underlying store.
-var db = level('my-db')
+var db = level('laps')
 
 // 2) Put a key & value
-db.put('name', 'Level', function (err) {
+db.put('name', 'Level2', function (err) {
   if (err) return console.log('Ooops!', err) // some kind of I/O error
 
   // 3) Fetch by key
@@ -56,6 +41,11 @@ db.put('name', 'Level', function (err) {
     // Ta da!
     console.log('name=' + value)
   })
+})
+
+db.createReadStream()
+.on('data', function (data) {
+  console.log(data.key, '=', data.value)
 })
 
 // var LevelDB = require('node-leveldb');
