@@ -35,7 +35,7 @@ var obj = {
   "time": 1,
   "beacon": "b1"
 }
-db.put('name', obj, function (err) {
+db.put('name', JSON.stringify(obj), function (err) {
   if (err) return console.log('Ooops!', err) // some kind of I/O error
 
   // 3) Fetch by key
@@ -49,7 +49,7 @@ db.put('name', obj, function (err) {
 
 db.createReadStream()
 .on('data', function (data) {
-  console.log(data.key, '=', data.value)
+  console.log(data.key, '=', JSON.parse(data.value))
 })
 
 // var LevelDB = require('node-leveldb');
