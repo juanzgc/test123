@@ -26,18 +26,18 @@ var udpSocket = dgram.createSocket('udp4');
 //     console.log("Got db", db);
 //   }
 // });
-var Db = require('tingodb')().Db;
-var db = new Db('/var/lib/mongodb', {});
-var collection = db.collection("lap");
+// var Db = require('tingodb')().Db;
+// var db = new Db('/var/lib/mongodb', {});
+// var collection = db.collection("lap");
 
-collection.findOne({"lap": 1}, function(err, result) {
-  if (err) {
-    console.log("error ", err);
-  }
-  else {
-    console.log("result", result);
-  }
-})
+// collection.findOne({"lap": 1}, function(err, result) {
+//   if (err) {
+//     console.log("error ", err);
+//   }
+//   else {
+//     console.log("result", result);
+//   }
+// })
 
 // var level = require('level')
 
@@ -57,6 +57,16 @@ collection.findOne({"lap": 1}, function(err, result) {
 //     console.log('name=' + value)
 //   })
 // })
+
+var LevelDB = require('node-leveldb');
+LevelDB.open('laps');
+
+LevelDB.set('lap1', 1);
+LevelDB.set('lap2', 2);
+
+LevelDB.list(function(key, val) {
+  console.log(key + ': ' + val);
+})
 
 
 
